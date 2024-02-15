@@ -128,3 +128,6 @@ the - &lt;embed&gt;tag
 - &lt;wbr&gt; New Tag:Specifies a line break opportunity.
 - &lt;wbr&gt; Indicate a potential word break point within a - &lt;nobr&gt; section
 - &lt;xmp&gt; Deprecated: Specifies preformatted text
+
+###Reference:
+[https://www.tutorialspoint.com/html5/pdf/html5_tags.pdf](https://www.tutorialspoint.com/html5/pdf/html5_tags.pdf)
