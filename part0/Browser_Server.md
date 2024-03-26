@@ -27,3 +27,6 @@ sequenceDiagram
 
     Note right of browser: The browser executes the callback function that renders the notes
     
+    browser->>server: POST new_note:[{ "content": "This is newnote", "date": "2024-1-1" }] >>> https://studies.cs.helsinki.fi/exampleapp/notes
+    
+    Note right of browser: Browser reloads page with new note added
