@@ -1,6 +1,15 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 
+const StatisticLine = ({label,  value}) =>{
+
+  return(
+    <div>
+      <span>{label}: {value}</span><br/>
+    </div>
+  )
+}
+
 const Statistics = ({bad, neutral, good}) => {
 
   const all = bad + neutral + good;
@@ -15,11 +24,11 @@ const Statistics = ({bad, neutral, good}) => {
 
   return(
     <div>
-      <span>good: {good}</span><br/>
-      <span>neutral: {neutral}</span><br/>
-      <span>bad: {bad}</span><br/>
-      <span>average: {average}</span><br/>
-      <span>positive: {positives}%</span>
+      <StatisticLine label="good" value={good}/>
+      <StatisticLine label="neutral" value={neutral}/>
+      <StatisticLine label="bad" value={bad}/>
+      <StatisticLine label="average" value={average}/>
+      <StatisticLine label="positive" value={positives}/>
     </div>
   )
 }
