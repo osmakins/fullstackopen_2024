@@ -5,7 +5,14 @@ const Statistics = ({bad, neutral, good}) => {
 
   const all = bad + neutral + good;
   const average = all/3;
-  const positives = all ? (good/all) * 100 : 0 // Condition to avoid NaN divide by zero
+  const positives = (good/all) * 100
+
+  if(bad === 0 && neutral === 0 && good === 0){
+    return(
+      <div>No feedback given</div>
+    )
+  }
+
   return(
     <div>
       <span>good: {good}</span><br/>
@@ -22,8 +29,6 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-
-
 
   return (
     <div className="App">
