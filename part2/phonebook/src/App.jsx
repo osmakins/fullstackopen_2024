@@ -1,16 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Persons from './component/Persons'
 import {FilterPerson} from './component/FilterPerson'
 import AddPerson from './component/AddPerson'
+import axios from 'axios'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
-
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [pbSearch, setPbSearch] = useState('')
@@ -19,11 +14,14 @@ const App = () => {
   const handleNumber = (event) => setNewNumber(event.target.value)
   const handleSearch = (event) => setPbSearch(event.target.value)
 
-  const handleSubmit = (event) =>{
+  useEffect(() => {
+    axios.get('http://localhost:3001/persons').then(repsonse => setPersons(repsonse.data))
+  }, [])
 
-    event.preventDefault();
+  const handleSubmit = (event) =>{
+    event.preventDefault()
+
     const isNameExist = persons.filter(person => person.name === newName)
-    
     if(isNameExist.length > 0){
       window.alert(`${newName} is already added to phonebook`)
       return
@@ -43,10 +41,10 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
        <FilterPerson pbSearch={pbSearch} handleSearch={handleSearch}/>
-      <h2>add new person</h2>
+      <h2>Add new person</h2>
       <AddPerson handleSubmit={handleSubmit} newName={newName} handleName={handleName} newNumber={newNumber} handleNumber={handleNumber}/>      
       <h2>Numbers</h2>
-      <Persons personsToShow={personsToShow} />
+      <Persons personsToShow={personsToShow}/>
     </div>
   )
 }
