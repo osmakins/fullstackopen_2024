@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Persons from './component/Persons'
 import {FilterPerson} from './component/FilterPerson'
 import AddPerson from './component/AddPerson'
-import axios from 'axios'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -15,7 +15,7 @@ const App = () => {
   const handleSearch = (event) => setPbSearch(event.target.value)
 
   useEffect(() => {
-    axios.get('http://localhost:3001/persons').then(repsonse => setPersons(repsonse.data))
+    personService.getAll().then(repsonse => setPersons(repsonse.data))
   }, [])
 
   const handleSubmit = (event) =>{
@@ -32,7 +32,7 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1
     }
-    setPersons(persons.concat(newPerson))
+    personService.create(newPerson).then(response => setPersons(persons.concat(response.data)))
   }
 
   const personsToShow = pbSearch ? persons.filter(person => person.name.toLowerCase().includes(pbSearch.toLowerCase())) : persons
