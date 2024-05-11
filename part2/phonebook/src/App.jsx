@@ -3,13 +3,14 @@ import Persons from './component/Persons'
 import {FilterPerson} from './component/FilterPerson'
 import AddPerson from './component/AddPerson'
 import personService from './services/persons'
-import axios from 'axios'
+
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [pbSearch, setPbSearch] = useState('')
+  const [notify, setNotify] = useState('')
 
   const handleName = (event) => setNewName(event.target.value)
   const handleNumber = (event) => setNewNumber(event.target.value)
@@ -26,8 +27,13 @@ const App = () => {
     if(isNameExist.length > 0){
       const editNumber = window.confirm(`${newName} is already added to phonebook. Edit the number?`)
       if(editNumber){
-        personService.update(isNameExist[0].id, {name: newName, number: newNumber}).then(response =>
-        setPersons(persons.map(person => (person.id === isNameExist[0].id) ? { ...person, number: response.number } : person)))
+          personService.update(isNameExist[0].id, {name: newName, number: newNumber}).then(response =>{
+          setPersons(persons.map(person => (person.id === isNameExist[0].id) ? { ...person, number: response.number } : person))
+          setNotify(['success', `Updated ${response.name} successfully`])
+          setTimeout(() => {
+            setNotify([])
+          }, 5000)
+        })
       }
       return
     }
@@ -37,7 +43,13 @@ const App = () => {
       number: newNumber,
       id: (persons.length + 1).toString()
     }
-    personService.create(newPerson).then(response => setPersons(persons.concat(response)))
+
+    personService.create(newPerson).then(response => {setPersons(persons.concat(response))
+      setNotify(['success', `Added ${response.name} successfully`])
+      setTimeout(() => {
+        setNotify([])
+      }, 5000)
+    })
   }
   
   const handleDelete = (person) =>{
@@ -55,7 +67,7 @@ const App = () => {
       <h2>Phonebook</h2>
        <FilterPerson pbSearch={pbSearch} handleSearch={handleSearch}/>
       <h2>Add new person</h2>
-      <AddPerson handleSubmit={handleSubmit} newName={newName} handleName={handleName} newNumber={newNumber} handleNumber={handleNumber}/>      
+      <AddPerson notify={notify} handleSubmit={handleSubmit} newName={newName} handleName={handleName} newNumber={newNumber} handleNumber={handleNumber}/>      
       <h2>Numbers</h2>
       <Persons personsToShow={personsToShow} handleDelete={handleDelete}/>
     </div>

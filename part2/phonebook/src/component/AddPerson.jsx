@@ -1,6 +1,9 @@
+import Notification from "./Notification"
 
-const AddPerson = ({handleSubmit, newName, handleName, newNumber, handleNumber}) =>{
+const AddPerson = ({notify, handleSubmit, newName, handleName, newNumber, handleNumber}) =>{
     return(
+    <>
+    <Notification notify={notify}/>
     <form onSubmit={handleSubmit}>
         <div>
             name: <input value={newName} onChange={handleName}/>
@@ -10,6 +13,7 @@ const AddPerson = ({handleSubmit, newName, handleName, newNumber, handleNumber})
             <button type="submit">add</button>
         </div>
     </form>
+    </>
     )
 }
 
