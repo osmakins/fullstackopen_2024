@@ -57,6 +57,15 @@ const App = () => {
     
     if(remove){
       personService.remove(person.id).then(response => setPersons(persons.filter(obj => obj.id !== response.id)))
+      .catch(error => {
+        //console.log(error.response.status)
+        if(error.response.status === 404){
+            setNotify(['error', `Information of ${person.name} has already been removed from the server`])
+            setTimeout(() => {
+            setNotify([])
+          }, 5000) 
+        }
+      })
     }
   }
 
