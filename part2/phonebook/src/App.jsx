@@ -24,7 +24,11 @@ const App = () => {
 
     const isNameExist = persons.filter(person => person.name === newName)
     if(isNameExist.length > 0){
-      window.alert(`${newName} is already added to phonebook`)
+      const editNumber = window.confirm(`${newName} is already added to phonebook. Edit the number?`)
+      if(editNumber){
+        personService.update(isNameExist[0].id, {name: newName, number: newNumber}).then(response =>
+        setPersons(persons.map(person => (person.id === isNameExist[0].id) ? { ...person, number: response.number } : person)))
+      }
       return
     }
 
