@@ -1,5 +1,8 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/persons'
+const PORT = import.meta.env.VITE_PORT || location.port
+const baseUrl = `${location.protocol}//${eval(import.meta.env.VITE_BASE_API_URL)}:${PORT}/api/persons`
+//const baseUrl = 'http://localhost:3001/api/persons'
+console.log(baseUrl)
 
 const getAll = () => {
   const request = axios.get(baseUrl)

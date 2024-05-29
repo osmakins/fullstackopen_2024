@@ -4,7 +4,6 @@ import {FilterPerson} from './component/FilterPerson'
 import AddPerson from './component/AddPerson'
 import personService from './services/persons'
 
-
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
@@ -41,10 +40,10 @@ const App = () => {
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: (persons.length + 1).toString()
     }
 
     personService.create(newPerson).then(response => {setPersons(persons.concat(response))
+      console.log(response)
       setNotify(['success', `Added ${response.name} successfully`])
       setTimeout(() => {
         setNotify([])
@@ -56,7 +55,7 @@ const App = () => {
     const remove = window.confirm(`Delete ${person.name} ?`)
     
     if(remove){
-      personService.remove(person.id).then(response => setPersons(persons.filter(obj => obj.id !== response.id)))
+      personService.remove(person.id).then(response => setPersons(response))
       .catch(error => {
         //console.log(error.response.status)
         if(error.response.status === 404){
