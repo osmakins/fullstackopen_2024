@@ -1,0 +1,6 @@
+[submodule "part3/phonebook_bke"]
+	path = part3/phonebook_bke
+	url = https://github.com/osmakins/Phonebook_fullstack
+[submodule "part3/phonebook_backend"]
+	path = part3/phonebook_backend
+	url = https://github.com/osmakins/phonebook_backend
